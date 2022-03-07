@@ -4,7 +4,12 @@ import AnswersList from "./AnswersList";
 function Main() {
   const [open, setOpen] = useState(false); //Ignore this state
 
+  const [submittedData, setSubmittedData] = useState([]);
+  const [editing, setEditing] = useState(0)
+  const [id, setId] = useState(1)
+
   const resetForm = {
+    id: id,
     color: "",
     spendTime: {
       swimming: false,
@@ -14,11 +19,11 @@ function Main() {
     },
     review: "",
     name: "",
-    email: "",
+    email: ""
   };
 
   const [duckData, setDuckData] = useState(resetForm);
-  const [submittedData, setSubmittedData] = useState([]);
+
 
   const handleColor = (event) => {
     setDuckData({ ...duckData, color: event.target.value });
@@ -60,9 +65,18 @@ function Main() {
   };
 
   const handleSubmit = (event) => {
+    console.log(duckData)
     event.preventDefault();
+    if(editing === 0) {
     setSubmittedData([...submittedData, duckData]);
-    setDuckData(resetForm);
+    setId(id + 1)
+    }
+    else if(editing !== 0) {
+     const updatedData = submittedData.map(item => item.id === editing ? duckData : item) 
+     setSubmittedData(updatedData)
+     setEditing(0)
+    }
+    setDuckData({...resetForm, id: id + 1});
   };
 
   return (
@@ -72,7 +86,8 @@ function Main() {
         <AnswersList 
           submittedData={submittedData} 
           setDuckData={setDuckData}
-          setSubmittedData={setSubmittedData} />
+          setSubmittedData={setSubmittedData}
+          setEditing={setEditing} />
       </section>
       <section className='main__form'>
         <form class='form' onSubmit={handleSubmit}>
@@ -207,7 +222,7 @@ function Main() {
               onChange={handleEmail}
             />
           </label>
-          <input class='form__submit' type='submit' value='Submit Survey!' />
+          <input class='form__submit' type='submit' value={editing !== 0 ? 'Edit Answer' :'Submit Survey!'} />
         </form>
       </section>
     </main>

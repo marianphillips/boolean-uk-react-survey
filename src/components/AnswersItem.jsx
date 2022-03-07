@@ -28,8 +28,7 @@ export default function AnswersItem(props) {
 
   const editAnswer = () => {
     props.setDuckData(answer)
-    const updatedAnswers = props.submittedData.filter(item => item.name !== answer.name)
-    props.setSubmittedData(updatedAnswers)
+    props.setEditing(answer.id)
   }
 
   return (

@@ -8,8 +8,7 @@ export default function AnswersList(props) {
           answerItem={answerItem}
           key={i}
           setDuckData={props.setDuckData}
-          submittedData={props.submittedData}
-          setSubmittedData={props.setSubmittedData}
+          setEditing={props.setEditing}
         />
       ))}
     </ul>
