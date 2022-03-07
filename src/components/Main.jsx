@@ -24,45 +24,17 @@ function Main() {
 
   const [duckData, setDuckData] = useState(resetForm);
 
-
-  const handleColor = (event) => {
-    setDuckData({ ...duckData, color: event.target.value });
-  };
-
   const handleSpendTime = (event) => {
-    if (event.target.value === "swimming")
-      setDuckData({
-        ...duckData,
-        spendTime: { ...duckData.spendTime, swimming: event.target.checked },
-      });
-    if (event.target.value === "bathing")
-      setDuckData({
-        ...duckData,
-        spendTime: { ...duckData.spendTime, bathing: event.target.checked },
-      });
-    if (event.target.value === "chatting")
-      setDuckData({
-        ...duckData,
-        spendTime: { ...duckData.spendTime, chatting: event.target.checked },
-      });
-    if (event.target.value === "noTime")
-      setDuckData({
-        ...duckData,
-        spendTime: { ...duckData.spendTime, noTime: event.target.checked },
-      });
+    setDuckData({
+      ...duckData,
+      spendTime: { ...duckData.spendTime, [event.target.value]: event.target.checked },
+    });
   };
 
-  const handleReview = (event) => {
-    setDuckData({ ...duckData, review: event.target.value });
-  };
+  const handleInput = (event) => {
+    setDuckData({...duckData, [event.target.name]: event.target.value})
+  }
 
-  const handleName = (event) => {
-    setDuckData({ ...duckData, name: event.target.value });
-  };
-
-  const handleEmail = (event) => {
-    setDuckData({ ...duckData, email: event.target.value });
-  };
 
   const handleSubmit = (event) => {
     console.log(duckData)
@@ -86,7 +58,6 @@ function Main() {
         <AnswersList 
           submittedData={submittedData} 
           setDuckData={setDuckData}
-          setSubmittedData={setSubmittedData}
           setEditing={setEditing} />
       </section>
       <section className='main__form'>
@@ -101,7 +72,7 @@ function Main() {
                   type='radio'
                   name='color'
                   value='1'
-                  onChange={handleColor}
+                  onChange={handleInput}
                   checked={duckData.color === "1"}
                 />
                 <label for='color-one'>1</label>
@@ -112,7 +83,7 @@ function Main() {
                   type='radio'
                   name='color'
                   value='2'
-                  onChange={handleColor}
+                  onChange={handleInput}
                   checked={duckData.color === "2"}
                 />
                 <label for='color-two'>2</label>
@@ -123,7 +94,7 @@ function Main() {
                   type='radio'
                   name='color'
                   value='3'
-                  onChange={handleColor}
+                  onChange={handleInput}
                   checked={duckData.color === "3"}
                 />
                 <label for='color-three'>3</label>
@@ -134,7 +105,7 @@ function Main() {
                   type='radio'
                   name='color'
                   value='4'
-                  onChange={handleColor}
+                  onChange={handleInput}
                   checked={duckData.color === "4"}
                 />
                 <label for='color-four'>4</label>
@@ -201,16 +172,16 @@ function Main() {
               cols='30'
               rows='10'
               value={duckData.review}
-              onChange={handleReview}
+              onChange={handleInput}
             ></textarea>
           </label>
           <label>
             Put your name here (if you feel like it):
             <input
               type='text'
-              name='username'
+              name='name'
               value={duckData.name}
-              onChange={handleName}
+              onChange={handleInput}
             />
           </label>
           <label>
@@ -219,7 +190,7 @@ function Main() {
               type='email'
               name='email'
               value={duckData.email}
-              onChange={handleEmail}
+              onChange={handleInput}
             />
           </label>
           <input class='form__submit' type='submit' value={editing !== 0 ? 'Edit Answer' :'Submit Survey!'} />
